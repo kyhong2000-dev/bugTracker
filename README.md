@@ -12,7 +12,7 @@ Proj is a project management tool that specifically designed to track the progre
 - MySQL
 - Deployment through Heroku
 
-# Descirption
+# Description
 There are two roles available in the application 
 * Admin
   * Add, Udpate or Delete the project
