@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Project Details</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Boxicon CDN -->
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>	
+	 <!-- Custom Stylesheet -->
+    <link href="/plugins/toastr/css/toastr.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header" style="background-color: #000000!important">
+           <div class="brand-logo">
+				<a th:href="@{/}" style=" text-align: center;">
+					<b class="logo-abbr" style="color:white"><i class='bx bxl-product-hunt' style="font-size:30px"></i></b>
+                    <span class="logo-compact"><img src="/img/logo-compact.png" alt=""></span>
+					<span class="brand-title" style="font-weight:900; font-size:25px;  text-align: center; color:white;" >PROJ</span>
+				</a>
+			</div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                        </div>
+                        <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
+                        <div class="drop-down   d-md-none">
+							<form action="#">
+								<input type="text" class="form-control" placeholder="Search">
+							</form>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <i class='bx bxs-user' style="font-size:30px;margin-top:25px"></i>
+                            </div>
+                            <div class="drop-down dropdown-profile   dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <form th:action="@{/logout}" th:hidden="true" method="post"name="logoutForm">
+											<input type="submit" value="Sign Out" />
+									</form>
+                                    <ul>
+                                       <li><b>Email</b><br>[[${#request.userPrincipal.principal.username}]]</li>
+                                       <li><b>Role</b><br><span sec:authentication="principal.authorities"></span>
+									   <li><b>Username<br></b><span th:text="${username}"></span></li>									
+										<li><a href="javascript: document.logoutForm.submit()"><i class="icon-key"></i>
+												<span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+            <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Dashboard</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/dashboard}">Home</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Project</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                           <i class="fa fa-ticket"></i><span class="nav-text">Tickets</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/ticket}">Project Ticket</a></li>
+                        </ul>
+                    </li>               
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb" style="float:left; margin-left:5px;margin-top:10px;">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
+                        <li class="breadcrumb-item active">
+                        	<b>
+	                        	<a href="javascript:void(0)">
+	                        		<span th:text="${projectName}"></span>
+	                        	</a>
+                        	</b>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+            
+            <div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<h3 th:text="${projectName}" style="float:left; margin-left:5px;margin-top:-10px;margin-bottom:-10px;"></h3>        
+				</div>
+			</div>
+
+            <div class="container-fluid">
+                <div class="row">
+                	<div class="col-4">
+                		<div class="card">
+                			<div class="card-body">
+                				<div class="row">
+                					<div class="col-6">
+                						<h5>Team</h5>
+                					</div>
+                					<div class="col-6">
+                                		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newTeamMemberModal" style="float:right; margin-top:-5px;" sec:authorize="hasAuthority('Admin')">
+                                 			New Member
+                                 			<span class="btn-icon-right"><i class="fa fa-plus"></i></span>
+                               			</button>
+                               			<!--Add New Team Members Modal -->
+                               			<div class="modal fade" id="newTeamMemberModal">
+	                                        <form th:action="@{/addTeamMember}">
+		                                        <div class="modal-dialog" role="document">
+		                                        	<div class="modal-content">
+		                                        		<div class="modal-header">
+			                                            	<h5 class="modal-title">Add New Team Member</h5>
+			                                                <button type="button" class="close" data-dismiss="modal">
+			                                                	<span>&times;</span>
+			                                                </button>
+			                                            </div>
+			                                            <div class="modal-body">
+			                                            	<label>
+			                                            		Available Contributors
+			                                            		<span class="text-danger">*</span>
+			                                            	</label>
+			                                            	<input type="hidden" th:value="${projectId}" name="project" id="project">
+			                                            	<select class="form-control input-default" id="contributors" name="contributors" multiple required>
+			                                            	   	<option th:each="user:${listAllUser}" th:text="${user.username}" th:value="${user.id}" th:if="${not #lists.contains(listUser, user)}">
+			                                            			
+			                                            		</option>
+			                                            	</select>
+			                                                	
+			                                            </div>
+			                     
+			                                            <div class="modal-footer">
+			                                            	<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+			                                                <button type="submit" class="btn btn-primary">Yes,Add</button>
+			                                            </div>
+			                                    	</div>
+		                                        </div>
+	                                        </form>
+	                                    </div>
+                                	</div>
+                				</div>
+                				<br>
+                				<div class="table-responsive" style="margin-left:-10px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr style="background-color:#F8F9F9;">
+                                                <th>Team Member Name</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody th:if="${not #lists.isEmpty(listUser)}">
+                                           <tr th:each="member:${listUser}">
+                                           		<td th:text="${member.username}"></td>
+                                           		<td th:text="${member.email}"></td>
+                                           		<td>
+                                           			<a data-toggle="modal" data-target="#delete-modal" th:attr="data-target=|#delete-modal-${member.id}|" sec:authorize="hasAuthority('Admin')">
+                                           				<i class='bx bxs-checkbox-minus' style="color:red; font-size:20px;"></i>
+                                           			</a>
+                                           			<!-- Delete Confirmation Modal -->
+													<div class="modal fade" id="delete-modal" th:id="|delete-modal-${member.id}|" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-hidden="true">
+														<form th:action="@{/deleteTeamMember}">
+															<div class="modal-dialog">
+															   		<div class="modal-content">
+																      	<div class="modal-header">
+																        	<h5 class="modal-title" id="staticBackdropLabel">Delete Confirmation</h5>
+																        	<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+																      	</div>
+																	<div class="modal-body">
+																		<input type="hidden" th:value="${member.id}" name="userId" readonly>
+																		<input type="hidden" th:value="${projectId}" name="project" id="project">						 
+																		Are you sure want to delete the selected team member named <span class="text-danger" th:text="${member.username}"></span> ?
+																	</div>
+																    <div class="modal-footer">
+																        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+																        <button type="submit" class="btn btn-primary">Yes, Delete</button>									
+																    </div>
+															    </div>
+															</div>
+														</form>
+													</div>
+                                           		</td>
+                                           </tr>
+                                        </tbody>
+                                        <tbody th:if="${#lists.isEmpty(listUser)}">
+                                           <tr class="text-danger" style="text-align: center;">
+                                           		<td class="" colspan="3">Sorry, this project team haven't recruit any member yet</td>
+                                           </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                			</div>
+                		</div>
+                	</div>
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                	<div class="col-6">
+                                		<h5>Ticket</h5>
+                                	</div>
+                                	<div class="col-6">
+                                		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newTicketModal" style="float:right; margin-top:-5px;">
+                                 			New Ticket
+                                 			<span class="btn-icon-right"><i class="fa fa-plus"></i></span>
+                               			</button>
+                               			
+                               			<!--Add New Team Members Modal -->
+                               			<div class="modal fade" id="newTicketModal">
+	                                        <div class="modal-dialog" role="document">
+	                                        	<form method="POST" th:action="@{/saveNewTicket}" th:object="${ticket}">
+	                                        		
+		                                            <div class="modal-content">
+		                                                <div class="modal-header">
+		                                                    <h5 class="modal-title">Add New Ticket</h5>
+		                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+		                                                    </button>
+		                                                </div>
+		                                                <div class="modal-body">
+		                                                	<div class="form-group">
+		                                                		<label>
+		                                                			Ticket Title
+		                                                			<span class="text-danger">*</span>
+		                                                		</label>
+		                                                		<input type="hidden" th:value="${projectId}" name="project" id="project">
+		                                                		<input type="text" class="form-control input-default" style="height:30px;" placeholder="" th:field="*{ticketTitle}" required>
+		                                                	</div>
+		                                                	<div class="form-group">
+		                                                		<label>
+		                                                			Description
+		                                                			<span class="text-danger">*</span>
+		                                                		</label>
+		                                                		<input type="text" class="form-control input-default" style="height:30px;" placeholder="" th:field="*{description}" required>
+		                                                	</div>
+		                                                	<div class="form-group">
+		                                                		<label>
+		                                                			Author
+		                                                			<span class="text-danger">*</span>
+		                                                		</label>
+		                                                		<select class="form-control input default" style="height:30px;" th:field="*{author}" required>
+		                                                			<option value=""></option>
+		                                                			<option th:text= "${username}" th:value="${username}"></option>
+		                                                		</select>
+		                                                	</div>
+		                                                	<div class="form-group">
+		                                                		<label>
+		                                                			Status
+		                                                			<span class="text-danger">*</span>
+		                                                		</label>
+		                                                		<select class="form-control input-default" style="height:30px;" th:field="*{status}" required>
+		                                                			<option value=""></option>
+		                                                			<option value="New">New</option>
+		                                                			<option value="In Progress">In Progress</option>
+		                                                			<option value="Resolved">Resolved</option>
+		                                                		</select>
+		                                                		
+		                                                	</div>
+		                                                	<div class="form-group">
+		                                                		<label>
+		                                                			Priority
+		                                                			<span class="text-danger">*</span>
+		                                                		</label>
+		                                                		<select class="form-control input-default" style="height:30px;" th:field="*{priority}" required>
+		                                                			<option value=""></option>
+		                                                			<option value="Low">Low</option>
+		                                                			<option value="Medium">Medium</option>
+		                                                			<option value="High">High</option>
+		                                                			<option value="Immediate">Immediate</option>
+		                                                		</select>
+		                                                	</div>
+		                                                	<div class="form-group">
+		                                                		<label>
+		                                                			Ticket Type
+		                                                			<span class="text-danger">*</span>
+		                                                		</label>
+		                                                		<select class="form-control input-default" style="height:30px;" th:field="*{ticketType}" required>
+		                                                			<option value=""></option>
+		                                                			<option value="Issue">Issue</option>
+		                                                			<option value="Bug">Bug</option>
+		                                                			<option value="Feature Request">Feature Request</option>
+		                                                		</select>
+		                                                	</div>
+		                                                	<div class="form-group">
+		                                                		<label>
+		                                                			Assigned Developers
+		                                                			<span class="text-danger">*</span>
+		                                                		</label>
+		                                                		<select class="form-control input-default" th:field="*{assignedDevs}" id="assignedDevs" name="assignedDevs" multiple required>
+				                                            	   	<option th:each="user:${listAllUser}" th:text="${user.username}" th:value="${user.id}">
+				                                            			
+				                                            		</option>
+		                                            			</select>
+		                                                	</div>
+		                                                	
+		                                                	
+		                                                </div>
+		                     
+		                                                <div class="modal-footer">
+		                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		                                                    <button type="submit" class="btn btn-primary">Submit</button>
+		                                                </div>
+		                                            </div>
+		                                    	</form>
+	                                        </div>
+	                                    </div>
+                                	</div>
+                                </div>
+                                <br>
+                 
+                				<div class="table-responsive" style="margin-left:-10px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr style="background-color:#F8F9F9;">
+                                                <th>Ticket Name</th>
+                                                <th>Description</th>
+                                                <th>Author</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr th:each="ticket:${listTicket}" th:if="${ticket.project.id} == ${projectId}" style="cursor: pointer" id="link" th:href="@{/getOneTicket/(id=${ticket.id})}">
+                                        		<td th:text="${ticket.ticketTitle}"></td>
+                                        		<td th:text="${ticket.description}"></td>
+                                        		<td th:text="${ticket.author}"></td>
+                                        		<td>
+                                        			<div class="btn-group dropright">
+                                                		<i class='bx bx-dots-vertical-rounded' data-toggle="dropdown" aria-expanded="false" style="font-size:20px;"></i>
+                                                		<ul class="dropdown-menu">
+                                                			<li><a class="dropdown-item" data-toggle="modal" th:attr="data-target=|#edit-modal-${ticket.id}|">Edit</a></li>
+                                                			<li><a id="deleteBtn" class="dropdown-item" data-toggle="modal" th:attr="data-target=|#delete-modal-${ticket.id}|">Delete</a></li>
+                                                		</ul>
+                                                		
+                                                		<!-- Edit Modal -->
+                                                		<div class="modal fade" id="edit-modal" th:id="|edit-modal-${ticket.id}|" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-hidden="true">
+															<form th:action="@{/updateTicket}">
+																<div class="modal-dialog">
+															   		<div class="modal-content">
+																      	<div class="modal-header">
+																        	<h5 class="modal-title" id="staticBackdropLabel">Edit Ticket Details</h5>
+																        	<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+																      	</div>
+																	<div class="modal-body">							 
+																		<input type="hidden" th:value="${ticket.id}" name="ticketId">
+																		<input type="hidden" th:value="${projectId}" name="project">
+																		<div class="form-group">
+																			<label>Ticket Title</label>
+																			<input type="text" class="form-control input-default" style="height:30px;" th:value="${ticket.ticketTitle}" name="ticketTitle">
+																		</div>
+																		<div class="form-group">
+																			<label>Description</label>
+																			<input type="text" class="form-control input-default" style="height:30px;" th:value="${ticket.description}" name="description">
+																		</div>
+																		<div class="form-group">
+																			<label>Author</label>
+																			<input type="text" class="form-control input-default" style="height:30px;" th:value="${ticket.author}" name="author" readonly>
+																		</div>
+																		<div class="form-group">
+																			<label>Status</label>
+																			<select class="form-control input-default" style="height:30px;" th:value=${ticket.status} name ="status">
+																				<option value=""></option>
+																				<option th:selected="${ticket.status == 'New'}" value="New">New</option>
+																				<option th:selected="${ticket.status == 'In Progress'}" value="In Progress">In Progress</option>
+																				<option th:selected="${ticket.status == 'Resolved'}" value="Resolved">Resolved</option>
+																			</select>
+																		</div>
+																		<div class="form-group">
+																			<label>Priority</label>
+																			<select class="form-control input-default" style="height:30px;" th:value="${ticket.priority}" name = "priority">
+																				<option value=""></option>
+																				<option th:selected="${ticket.priority == 'Low'}" value="Low">Low</option>
+																				<option th:selected="${ticket.priority == 'Medium'}" value="Medium">Medium</option>
+																				<option th:selected="${ticket.priority == 'High'}" value="High">High</option>
+																				<option th:selected="${ticket.priority == 'Immediate'}" value="Immediate">Immediate</option>
+																			</select>
+																		</div>
+																		<div class="form-group">
+																			<label>Ticket Type</label>
+																			<select class="form-control input-default" style="height:30px;" th:value="${ticket.ticketType}" name = "ticketType">
+																				<option value=""></option>
+																				<option th:selected="${ticket.ticketType == 'Issue'}" value="Issue">Issue</option>
+																				<option th:selected="${ticket.ticketType == 'Bug'}" value="Bug">Bug</option>
+																				<option th:selected="${ticket.ticketType == 'Feature Request'}" value="Feature Request">Feature Request</option>
+																			</select>
+																		</div>
+																	</div>
+																    <div class="modal-footer">
+																        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+																        <button type="submit" class="btn btn-primary">Yes, Edit</button>									
+																    </div>
+															    </div>
+															  </div>
+														  </form>
+														</div>
+                                                		
+                                                		
+                                                		<!-- Delete Confirmation Modal -->
+                                                		<div class="modal fade" id="delete-modal" th:id="|delete-modal-${ticket.id}|" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-hidden="true">
+															<div class="modal-dialog">
+														   		<div class="modal-content">
+															      	<div class="modal-header">
+															        	<h5 class="modal-title" id="staticBackdropLabel">Delete Confirmation</h5>
+															        	<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+															      	</div>
+																<div class="modal-body">							 
+																	<p style="font-size:15px;">Are you sure want to delete the selected ticket record?</p>
+																</div>
+															    <div class="modal-footer">
+															        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+															        <a th:href="@{/deleteTicket/{id}(id=${ticket.id})}"  type="button" class="btn btn-primary">Yes, Delete</a>									
+															    </div>
+														    </div>
+														  </div>
+														</div>
+                                                		
+                                                		
+                                                	</div>
+                                        		</td>
+                                        	</tr>
+                                        	<tr th:each="ticket:${listTicket}" th:if="${ticket.project.id} != ${projectId} and ${#lists.isEmpty(listTicket)}">
+                                        		<td colspan="3" class="text-danger" style="text-align: center;">There is no ticket added in this project yet</td>
+                                        	</tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Selected Ticket Details -->
+                 <div class="row" id="ticket-details" style="display:none">
+                	<div class="col-12">
+                		<div class="card">
+                			<div class="card-body">
+                				<div class="row">
+                					<div class="col-12">
+                						<h5>Selected Ticket Details</h5>
+                						<br>                						
+                					</div>
+                				</div>
+                				<div class="row">
+                					<!-- Content of ticket details -->
+                					<div class="col-7">
+                						<div class="card">
+                							<div class="card-body">
+                								<div class="container">
+													<div class="row row-cols-4">
+													    <div class="col-3 mb-2" style="margin-right:20px;">
+													    	<b>Ticket Title</b>
+													    	<br>
+													    	<span id="ticket-title"></span>
+													    </div>
+													    <div class="col mb-2" style="margin-right:20px;">
+													    	<b>Author</b>
+													    	<br>
+													    	<span id="author"></span>
+													    </div>
+													    <div class="col-6 mb-2">
+													    	<b>Description</b>
+													    	<br>
+													    	<span id="description"></span>
+													    </div>
+													    
+													    <div class="col" style="margin-right:20px;">
+													    	<b>Status</b>
+													    	<br>
+													    	<span class="badge bg-primary text-white" id="ticket-status"></span>
+													    </div>
+													    <div class="col">
+													    	<b>Priority</b>
+													    	<br>
+													    	<span class="badge bg-primary text-white" id="priority"></span>
+													    </div>
+													    <div class="col" style="margin-left:-20px;">
+													    	<b>Type</b>
+													    	<br>
+													    	<span class="badge bg-primary text-white" id="type"></span>
+													    </div>
+													    <div class="col">
+													    	<b>Developers</b>
+													    	<br>
+													    	<span id="assignedDevs"></span>
+													    </div>
+												  	</div>
+												</div>
+                							</div>
+                						</div>
+                					</div>
+                				</div>
+                			</div>
+                		</div>
+                	</div>
+                </div>                
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="/plugins/common/common.min.js"></script>
+    <script src="/js/custom.min.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/gleek.js"></script>
+    <script src="/js/styleSwitcher.js"></script>
+    
+    <!-- Toast -->
+    <script src="/plugins/toastr/js/toastr.min.js"></script>
+    <script src="/plugins/toastr/js/toastr.init.js"></script>
+	<script>
+	var current = new Date();
+	var localeString = current.toLocaleString();
+	//document.getElementById("currentDateTime").innerText = localeString; 
+	//console.log(localeString);
+	
+	$('.table #link').on('click',function(event){
+		//event.preventDefault();
+		$('#ticket-details').show();
+		var href = $(this).attr('href');
+	
+		$.get(href,function(ticket){
+			$('#ticket-details #ticket-title').text(ticket.ticketTitle);
+			$('#ticket-details #description').text(ticket.description);
+			$('#ticket-details #author').text(ticket.author);
+			$('#ticket-details #ticket-status').text(ticket.status);
+			$('#ticket-details #priority').text(ticket.priority);
+			$('#ticket-details #type').text(ticket.ticketType);
+			$('#ticket-details #ticketId').val(ticket.id);
+			console.log(ticket.comments);
+			
+			//process to concat all the strings in the assignedDevs arrays			
+			let x = ticket.assignedDevs;
+			let result = '';
+			
+			for(let i=0; i< x.length;i++){
+				result = result.concat(x[i].username);
+				if(i < x.length - 1){
+					result = result.concat(",");
+				}
+			}
+			
+			$('#ticket-details #assignedDevs').text(result);
+			
+			//create and show the divs based on the arrays length 
+			/*let y = ticket.comments
+			for(let i=0; i<y.length;i++){
+				$('.comment-section').html("<div class='card'>" + "<div class='card-body' style='height:4rem; padding:0.5rem 1rem; border-radius: 10px; border: 1px solid rgba( 255, 255, 255, 0.18 );'>" + "<div><span style='float:left'><small style='font-weight:bold; margin-right:5px;'>"+ y[i].author +"</small><small class='text-danger'>"+ y[i].dateTime +"</small></span><br><i style='float:right; color:red;' class='bx bxs-trash-alt'></i></div><p style='font-size:13px;'>"+ y[i].content +"</p></div></div>");
+				console.log(y[i].author + "--> " + y[i].content + " ---> " + y[i].dateTime);
+			}*/
+		});
+	});
+	
+	/**
+	Check the element if it contains the click target
+	*/
+	/***
+	$(document).mouseup(function (e) { //mouse-up event is to first check upon the document
+        var ticketDetailscontainer = $("#ticket-details"); //retrieve the whole div of ticket details
+        
+        *Element will be checked for two things
+        **The is() method check the current element against the specified element. The click target is passed as a parameter and the whole result is negated to essentially check if the click was outside the element.
+        The has() method is used to return all the elements which match at least one of the elements passed to this method. The length property is then used on the result to check if any elements are returned. If there are no elements returned, it means that the click was outside the element.
+        
+        if(!ticketDetailscontainer.is(e.target) && ticketDetailscontainer.has(e.target).length === 0) { 
+        	ticketDetailscontainer.hide();
+        }
+    });****/
+		
+	
+	</script>
+</body>
+
+</html>

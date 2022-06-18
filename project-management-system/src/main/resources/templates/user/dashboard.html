@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dashboard</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Boxicon CDN -->
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>	
+	<!-- Custom Stylesheet -->
+    <link href="./plugins/toastr/css/toastr.min.css" rel="stylesheet">
+    <!-- Font Awesome Custom CSS -->
+    <link href="./icons/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header" style="background-color: #000000!important">
+           <div class="brand-logo">
+				<a th:href="@{/}" style=" text-align: center;">
+					<b class="logo-abbr" style="color:white"><i class='bx bxl-product-hunt' style="font-size:30px"></i></b>
+                    <span class="logo-compact"><img src="./img/logo-compact.png" alt=""></span>
+					<span class="brand-title" style="font-weight:900; font-size:25px;  text-align: center; color:white;" >PROJ</span>
+				</a>
+			</div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                        </div>
+                        <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
+                        <div class="drop-down   d-md-none">
+							<form action="#">
+								<input type="text" class="form-control" placeholder="Search">
+							</form>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <i class='bx bxs-user' style="font-size:30px;margin-top:25px"></i>
+                            </div>
+                            <div class="drop-down dropdown-profile   dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <form th:action="@{/logout}" th:hidden="true" method="post"name="logoutForm">
+											<input type="submit" value="Sign Out" />
+									</form>
+                                    <ul>
+                                       <li><b>Email</b><br>[[${#request.userPrincipal.principal.username}]]</li>
+                                       <li><b>Role</b><br><span sec:authentication="principal.authorities"></span>
+									   <li><b>Username<br></b><span th:text="${username}"></span></li>									
+										<li><a href="javascript: document.logoutForm.submit()"><i class="icon-key"></i>
+												<span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Dashboard</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/dashboard}">Home</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Project</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                           <i class="fa fa-ticket"></i><span class="nav-text">Tickets</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/ticket}">Project Ticket</a></li>
+                        </ul>
+                    </li>               
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb" style="float:left; margin-left:5px;margin-top:10px;">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a th:href="@{/dashboard}">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                	<div class="col-6">
+                                		<h3>Project</h3>
+                                	</div>
+                                	<div class="col-6">
+                                		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newProjectModal" style="float:right; margin-top:-5px;" sec:authorize="hasAuthority('Admin')">
+                                 			New Project
+                                 			<span class="btn-icon-right"><i class="fa fa-plus"></i></span>
+                               			</button>
+                               			<!--Add New Project Modal -->
+	                                    <div class="modal fade" id="newProjectModal">
+	                                        <div class="modal-dialog" role="document">
+	                                            <form method="POST" th:action="@{/saveNewProject}" th:object="${project}">
+		                                            <div class="modal-content">
+		                                                <div class="modal-header">
+		                                                    <h5 class="modal-title">Add New Project</h5>
+		                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+		                                                    </button>
+		                                                </div>
+		                                                <div class="modal-body">
+		                                                		<div class="form-group">
+		                                                			<label>
+		                                                				Project Name
+		                                                				<span class="text-danger">*</span>
+		                                                			</label>
+						                                            <input type="text" class="form-control input-default" style="height:30px;" placeholder="" th:field="*{projectName}" required>
+						                                        </div>
+						                                        <div class="form-group">
+						                                            <label>
+						                                            	Description
+						                                            	<span class="text-danger">*</span>
+						                                            </label>
+						                                            <input type="text" class="form-control input-default" style="height:30px;" placeholder="" th:field="*{description}" required >
+						                                        </div>
+						                                        <div class="form-group">
+						                                            <label>
+						                                            	Created At
+						                                            	<span class="text-danger">*</span>
+						                                            </label>
+						                                            <input id="createdAtTime" type="text" class="form-control input-default" style="height:30px;" th:field="*{createdAt}" readonly required>
+						                                        </div>
+						                                        <div class="form-group">
+						                                            <label>
+						                                            	Available Contributors
+						                                            	<span class="text-danger">*</span>
+						                                            </label>
+						                                            
+						                                            <select class="form-control input-default" id="contributors" name="contributors" style="height:100px;" th:field="*{contributors}" multiple required>
+						                                            	<option th:each="user:${listUser}" th:text="${user.username}" th:value="${user.id}" th:unless="${user.project != null}">
+						                 
+						                                            	</option>
+						                                            </select>				                                          
+						                                        </div>
+		                                                	
+		                                                </div>
+		                     
+		                                                <div class="modal-footer">
+		                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		                                                    <button type="submit" class="btn btn-primary">Submit</button>
+		                                                </div>
+		                                            </div>
+		                                    	</form>
+	                                        </div>
+	                                    </div>
+                                	</div>
+                                </div>
+                                <br>
+                                <div class="table-responsive" style="margin-left:-10px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr style="background-color:#F8F9F9; text-transform: uppercase; text-align:center;">
+                                                <th>Project Name</th>
+                                                <th>Description</th>
+                                                <th>Contributor</th>
+                                                <th>Created At</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr  th:each="project: ${listProject}">
+                                                <td style="text-align:center;">
+                                                	<a th:href ="@{/project/{projectId}(projectId=${project.id})}">
+                                                		<b th:text="${project.projectName}"></b>
+                                                	</a>
+                                                </td>
+                                                <td style="text-align:center;" th:text="${project.description}"></td>
+                                                <td style="text-align:center;">
+                                                	<span th:each="c:${project.contributors}">
+                                                		<span th:text="${c.username}" class="badge badge-pill badge-light"></span>
+                                                		<br>
+                                                	</span>
+                                                </td>
+                                                <td style="text-align:center;" th:text="${project.createdAt}">
+                                                	
+                                                </td>
+                                                <td> 
+                                                	<div class="btn-group dropright" sec:authorize="hasAuthority('Admin')">
+                                                		<i class='bx bx-dots-vertical-rounded' data-toggle="dropdown" aria-expanded="false" style="font-size:20px;"></i>
+                                                		<ul class="dropdown-menu">
+                                                			<li><a class="dropdown-item" data-toggle="modal" data-target="#edit-modal"   th:attr="data-target=|#edit-modal-${project.id}|">Edit</a></li>
+                                                			<li><a id="deleteBtn" class="dropdown-item" data-toggle="modal" data-target="#delete-modal" th:attr="data-target=|#delete-modal-${project.id}|">Delete</a></li>
+                                                		</ul>
+                                                		
+                                                		<!-- Edit Modal -->
+														<div class="modal fade" id="edit-modal" th:id="|edit-modal-${project.id}|" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-hidden="true">
+															<form th:action="@{/updateProject}" th:object="${project}">
+																<div class="modal-dialog">
+															   		<div class="modal-content">
+																      	<div class="modal-header">
+																        	<h5 class="modal-title" id="staticBackdropLabel">Edit Project</h5>
+																        	<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+																      	</div>
+																	<div class="modal-body">
+																	     <div class="form-group">
+																	     	 <input type="hidden" th:value="${project.id}" name="projectId">
+																	     	 <label>Project Name</label>
+																	     	 <input name="projectName" type="text" class="form-control input-default" style="height:30px;" th:value="${project.projectName}">
+																	     </div>
+																	     <div class="form-group">
+																	     	 <label>Description</label>
+																	     	 <input name="description" type="text" class="form-control input-default" style="height:30px;" th:value="${project.description}">
+																	     </div>
+																	</div>
+																    <div class="modal-footer">
+																        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+																        <button type="submit" class="btn btn-primary">Yes, Edit</button>
+																    </div>
+															    </div>
+															  </div>
+														  </form>
+														</div>
+														
+														
+														<!-- Delete Confirmation Modal -->
+														<div class="modal fade" id="delete-modal" th:id="|delete-modal-${project.id}|" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-hidden="true">
+															<div class="modal-dialog">
+														   		<div class="modal-content">
+															      	<div class="modal-header">
+															        	<h5 class="modal-title" id="staticBackdropLabel">Delete Confirmation</h5>
+															        	<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+															      	</div>
+																<div class="modal-body">							 
+																	<p style="font-size:15px;">Are you sure want to delete the selected project record?</p>
+																</div>
+															    <div class="modal-footer">
+															        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+															        <a th:href="@{/deleteProject/{id}(id=${project.id})}"  type="button" class="btn btn-primary">Yes, Delete</a>									
+															    </div>
+														    </div>
+														  </div>
+														</div>
+                                                	</div>                                              	
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doughnut & Pie Chart div here -->
+                <div class="row">
+                	<div class="col-4">
+                		<div class="card">
+                			<div class="card-body">
+                				<h5>Tickets By Type</h5>
+                				<canvas id="pie-chart-TicketType">
+                				
+                				</canvas>
+                				
+                			</div>
+                		</div>
+                	</div>
+                	<div class="col-4">
+                		<div class="card">
+                			<div class="card-body">
+                				<h5>Tickets By Priority</h5>
+                				<canvas id="pie-chart-TicketPriority">
+                				
+                				</canvas>
+                			</div>
+                		</div>
+                	</div>
+                	<div class="col-4">
+                		<div class="card">
+                			<div class="card-body">
+                				<h5>Tickets By Status</h5>
+                				<canvas id="pie-chart-TicketStatus">
+                				
+                				</canvas>
+                			</div>
+                		</div>
+                	</div>
+                </div>
+                
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+    </div>
+    
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+    
+    
+    <!-- Toast -->
+    <script src="./plugins/toastr/js/toastr.min.js"></script>
+    <script src="./plugins/toastr/js/toastr.init.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+    
+    <script th:inline="javascript">
+    	var today = new Date();
+    	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    	var dateTime = date+' '+time;
+    	
+    	document.getElementById("createdAtTime").value = dateTime;
+    	/*
+    	$('.table #deleteBtn').on('click',function(event){		
+    		event.preventDefault(); //prevent the th:href of the delete URL to be submit
+    		var href = $(this).attr('href'); //retrieve the delete ID URL of the clicked row 
+    		$('#delete-modal #delProjectRef').attr('href',href); //pass and replace the delete ID URL of the clicked row to the modal confirm delete button 
+    		$('#delete-modal').modal();//show the modal
+    	});	*/
+    	
+    	const queryString = window.location.search; //retrieve the website link
+    	console.log(queryString);
+
+    	const result = queryString.includes("success"); //check whether the website contains the "success" query param 
+    	if(result){ //if the return boolean result of the result is true, display the toast to indicate that the project is added successfully.
+    		toastr.success("Your project is added successfully", "Congratulation!", {
+		        positionClass: "toast-bottom-right",
+		        timeOut: 5e3,
+		        closeButton: !0,
+		        debug: !1,
+		        newestOnTop: !0,
+		        progressBar: !0,
+		        preventDuplicates: !0,
+		        onclick: null,
+		        showDuration: "300",
+		        hideDuration: "1000",
+		        extendedTimeOut: "1000",
+		        showEasing: "swing",
+		        hideEasing: "linear",
+		        showMethod: "fadeIn",
+		        hideMethod: "fadeOut",
+		        tapToDismiss: !1
+		    })
+    	}
+    	
+    	//chart.js pie chart set-up, config and render code here
+    	let ctx  = document.getElementById("pie-chart-TicketType").getContext('2d');
+    	let ctx1 = document.getElementById("pie-chart-TicketPriority").getContext('2d');
+    	let ctx2 = document.getElementById("pie-chart-TicketStatus").getContext('2d');
+    	
+    	let ticketTypeLabel = ['Issue','Bug','Feature Request'];
+    	let ticketPriorityLabel= ['Low','Medium','High','Immediate'];
+    	let ticketStatusLabel =['New','In Progress', 'Resolved'];
+    	
+    	const newStatus = [[${newStatus}]];
+    	const inProgressStatus = [[${inProgressStatus}]];
+    	const resolvedStatus = [[${resolvedStatus}]];
+    	
+    	const lowPriority = [[${lowPriority}]];
+    	const mediumPriority = [[${mediumPriority}]];
+    	const highPriority = [[${highPriority}]];;
+    	const immediatePriority = [[${immediatePriority}]];;
+    	
+    	const issueType = [[${issueType}]];;
+    	const bugType = [[${bugType}]];;
+    	const featureRequestType = [[${featureRequestType}]];;
+    	
+    	let ticketTypeData = [issueType,bugType,featureRequestType];
+    	let ticketPriorityData = [lowPriority,mediumPriority,highPriority,immediatePriority];
+    	let ticketStatusData =  [newStatus,inProgressStatus,resolvedStatus];
+    	    	
+    	let colorHex = ['#FB3640', '#EFCA08', '#43AA8B', '#253D5B'];
+    	
+    	let myChart = new Chart(ctx, {
+    		  type: 'pie',
+    		  data: {
+    		    datasets: [{
+    		      data: ticketTypeData,
+    		      backgroundColor: colorHex
+    		    }],
+    		    labels: ticketTypeLabel
+    		  },
+    		  options: {
+    		    responsive: true,
+    		    legend: {
+    		      position: 'right'
+    		    },
+    		    plugins: {
+    		      datalabels: {
+    		        color: '#fff',
+    		        anchor: 'end',
+    		        align: 'start',
+    		        offset: -10,
+    		        borderWidth: 2,
+    		        borderColor: '#fff',
+    		        borderRadius: 25,
+    		        backgroundColor: (context) => {
+    		          return context.dataset.backgroundColor;
+    		        },
+    		        font: {
+    		          weight: 'bold',
+    		          size: '10'
+    		        },
+    		        formatter: (value) => {
+    		          return value + ' %';
+    		        }
+    		      }
+    		    }
+    		  }
+    		})
+    	
+    	let myChart1 = new Chart(ctx1, {
+  		  type: 'pie',
+  		  data: {
+  		    datasets: [{
+  		      data: ticketPriorityData,
+  		      backgroundColor: colorHex
+  		    }],
+  		    labels: ticketPriorityLabel
+  		  },
+  		  options: {
+  		    responsive: true,
+  		    legend: {
+  		      position: 'right'
+  		    },
+  		    plugins: {
+  		      datalabels: {
+  		        color: '#fff',
+  		        anchor: 'end',
+  		        align: 'start',
+  		        offset: -10,
+  		        borderWidth: 2,
+  		        borderColor: '#fff',
+  		        borderRadius: 25,
+  		        backgroundColor: (context) => {
+  		          return context.dataset.backgroundColor;
+  		        },
+  		        font: {
+  		          weight: 'bold',
+  		          size: '10'
+  		        },
+  		        formatter: (value) => {
+  		          return value + ' %';
+  		        }
+  		      }
+  		    }
+  		  }
+  		})
+    	
+    	let myChart2 = new Chart(ctx2, {
+  		  type: 'pie',
+  		  data: {
+  		    datasets: [{
+  		      data: ticketStatusData,
+  		      backgroundColor: colorHex
+  		    }],
+  		    labels: ticketStatusLabel
+  		  },
+  		  options: {
+  		    responsive: true,
+  		    legend: {
+  		      position: 'right'
+  		    },
+  		    plugins: {
+  		      datalabels: {
+  		        color: '#fff',
+  		        anchor: 'end',
+  		        align: 'start',
+  		        offset: -10,
+  		        borderWidth: 2,
+  		        borderColor: '#fff',
+  		        borderRadius: 25,
+  		        backgroundColor: (context) => {
+  		          return context.dataset.backgroundColor;
+  		        },
+  		        font: {
+  		          weight: 'bold',
+  		          size: '10'
+  		        },
+  		        formatter: (value) => {
+  		          return value + ' %';
+  		        }
+  		      }
+  		    }
+  		  }
+  		})
+    	
+    	
+    </script>
+
+</body>
+
+</html>

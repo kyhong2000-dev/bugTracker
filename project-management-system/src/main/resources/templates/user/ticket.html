@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ticket</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Boxicon CDN -->
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>	
+	 <!-- Custom Stylesheet -->
+    <link href="/plugins/toastr/css/toastr.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header" style="background-color: #000000!important">
+           <div class="brand-logo">
+				<a th:href="@{/}" style=" text-align: center;">
+					<b class="logo-abbr" style="color:white"><i class='bx bxl-product-hunt' style="font-size:30px"></i></b>
+                    <span class="logo-compact"><img src="/img/logo-compact.png" alt=""></span>
+					<span class="brand-title" style="font-weight:900; font-size:25px;  text-align: center; color:white;" >PROJ</span>
+				</a>
+			</div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                        </div>
+                        <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
+                        <div class="drop-down   d-md-none">
+							<form action="#">
+								<input type="text" class="form-control" placeholder="Search">
+							</form>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <i class='bx bxs-user' style="font-size:30px;margin-top:25px"></i>
+                            </div>
+                            <div class="drop-down dropdown-profile   dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <form th:action="@{/logout}" th:hidden="true" method="post"name="logoutForm">
+											<input type="submit" value="Sign Out" />
+									</form>
+                                    <ul>
+                                       <li><b>Email</b><br>[[${#request.userPrincipal.principal.username}]]</li>
+                                       <li><b>Role</b><br><span sec:authentication="principal.authorities"></span>
+									   <li><b>Username<br></b><span th:text="${username}"></span></li>									
+										<li><a href="javascript: document.logoutForm.submit()"><i class="icon-key"></i>
+												<span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+            <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Dashboard</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/dashboard}">Home</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Project</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                           <i class="fa fa-ticket"></i><span class="nav-text">Tickets</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/ticket}">Project Ticket</a></li>
+                        </ul>
+                    </li>               
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb" style="float:left; margin-left:5px;margin-top:10px;">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Tickets</a></li>
+                        <li class="breadcrumb-item active"><a th:href="@{/ticket}">Project Ticket</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                	<div class="col-3">
+                                		<h3>Ticket</h3>
+                                	</div>
+                                	<div class="col-9">
+                                		<div class="row" style="float:right; margin-right:-20px;">
+                                			<div class="col-4" style="margin-right:-20px;">
+                                				<span class="form-label" >Filter By</span>
+                                			</div>
+                                			<div class="col-8" style="width:200px;">
+                                		
+	                                				<select class="form-control input-default" style="height:30px; margin-top:-10px;" id="filter" name="filter">
+	                                					<option value=""></option>
+	                                					<optgroup label="Custom">
+	                                						<option value="createdByYou">Created By You</option>
+	                                					</optgroup>
+	                                					<optgroup label="Status">
+	                                						<option value="">New</option>
+	                                						<option value="">In Progress</option>
+	                                						<option value="">Resolved</option>
+	                                					</optgroup>
+	                                					<optgroup label="Priority">
+	                                						<option value="Low">Low</option>
+	                                						<option value="Medium">Medium</option>
+	                                						<option value="High">High</option>
+	                                						<option value="Immediate">Immediate</option>
+	                                					</optgroup>
+	                                					<optgroup label="Ticket Type">
+	                                						<option value="">Issue</option>
+	                                						<option value="">Bug</option>
+	                                						<option value="">Feature Request</option>
+	                                					</optgroup>
+	                                				</select>
+                 
+                                			</div>
+                                		</div>                             		                             		
+                               		</div>
+                                </div>
+                                <div class="table-responsive" style="margin-left:-10px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr style="background-color:#F8F9F9; text-align:center;">
+                                                <th>Ticket Title</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Priority</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           <tr th:each="ticket:${listTicket}" style="text-align:center;">
+                                           		<td th:text="${ticket.ticketTitle}"></td>
+                                           		<td th:text="${ticket.description}"></td>
+                                           		<td>
+                                           			<span th:text="${ticket.status}" class="label label-pill label-secondary"></span>
+                                           		</td>
+                                           		<td>
+                                           			<span th:text="${ticket.priority}" class="label label-secondary"></span>
+                                           		</td>
+                                           		
+                                           </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                    
+                                    
+                                    <div th:if="${totalPages > 1}">
+							            <div class="row col-12">
+							                <div class="col-3">
+							                    Showing Total [[${totalItems}]] Items | Page <b>[[${currentPage}]]</b> of <b>[[${totalPages}]]</b>
+							                </div>
+							                <div class="col-6">
+							                	
+							                </div>
+							                <div class="row col-3" style="padding-right:30px;">
+							                	<div class="col-6">
+								                	<a th:if="${currentPage != 1}" th:href="@{'/ticket/' + ${currentPage - 1}}">Previous</a>
+								                    <span th:unless="${currentPage != 1}">Previous</span>
+							                	</div>
+								                <div class="col-6">
+								                    <a th:if="${currentPage < totalPages}" th:href="@{'/ticket/' + ${currentPage + 1}}">Next</a>
+								                    <span th:unless="${currentPage < totalPages}">Next</span>
+								                    <span>
+								                    	<input type="hidden" th:value="${currentPage}" id="currentPage">
+								                    	<input type="hidden" th:value="${totalPages}"  id="totalPages">
+								                    </span>
+								                    
+								                </div>	
+							                </div>
+							               	
+							            </div>
+							        </div>
+                                </div>                         
+                            </div>
+                        </div>
+                    </div>
+                </div>               
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="/plugins/common/common.min.js"></script>
+    <script src="/js/custom.min.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/gleek.js"></script>
+    <script src="/js/styleSwitcher.js"></script>
+    
+    
+    <!-- Toast -->
+    <script src="/plugins/toastr/js/toastr.min.js"></script>
+    <script src="/plugins/toastr/js/toastr.init.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="/plugins/chart.js/Chart.bundle.min.js"></script>
+    
+    <script>
+    	//check whether the page number is equal to the total pages number
+    	var currentPageNum = document.getElementById("currentPage").value;
+    	var totalPagesNum = document.getElementById("totalPages").value;
+    	
+    	if(currentPageNum == totalPagesNum){
+    		toastr.warning("Your have reached the last page", "Warning!", {
+		        positionClass: "toast-bottom-right",
+		        timeOut: 5e3,
+		        closeButton: !0,
+		        debug: !1,
+		        newestOnTop: !0,
+		        progressBar: !0,
+		        preventDuplicates: !0,
+		        onclick: null,
+		        showDuration: "300",
+		        hideDuration: "1000",
+		        extendedTimeOut: "1000",
+		        showEasing: "swing",
+		        hideEasing: "linear",
+		        showMethod: "fadeIn",
+		        hideMethod: "fadeOut",
+		        tapToDismiss: !1
+		    })
+    	}
+    
+    	const queryString = window.location.search; //retrieve the website link
+    	console.log(queryString);
+
+    	const result = queryString.includes("success"); //check whether the website contains the "success" query param 
+    	if(result){ //if the return boolean result of the result is true, display the toast to indicate that the project is added successfully.
+    		toastr.success("Your project is added successfully", "Congratulation!", {
+		        positionClass: "toast-bottom-right",
+		        timeOut: 5e3,
+		        closeButton: !0,
+		        debug: !1,
+		        newestOnTop: !0,
+		        progressBar: !0,
+		        preventDuplicates: !0,
+		        onclick: null,
+		        showDuration: "300",
+		        hideDuration: "1000",
+		        extendedTimeOut: "1000",
+		        showEasing: "swing",
+		        hideEasing: "linear",
+		        showMethod: "fadeIn",
+		        hideMethod: "fadeOut",
+		        tapToDismiss: !1
+		    })
+    	}
+    	
+    	//retrieve the filter option selected by the user
+    	
+    </script>
+
+</body>
+
+</html>
