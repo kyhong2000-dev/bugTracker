@@ -10,7 +10,6 @@ Proj is a project management tool that specifically designed to track the progre
 - Hibernate
 - Tomcat 
 - MySQL
-- Deployment through Heroku
 
 # Description
 There are two roles available in the application 
