@@ -24,7 +24,7 @@ There are two roles available in the application
 Only admin is authorized to view all the project created. In contrast, each logged-in normal users(developers) are only view the project that is assigned by the admin.  
 
 
-#Screenshots
+# Screenshots
 ![image](https://user-images.githubusercontent.com/35690496/174430603-0a92a863-1126-4707-8e2d-8c37fe967650.png)
 
 ![image](https://user-images.githubusercontent.com/35690496/174430587-0fd58a28-f863-4a65-95c9-99cc7442dc62.png)
